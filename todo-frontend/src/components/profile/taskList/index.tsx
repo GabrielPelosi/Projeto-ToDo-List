@@ -6,7 +6,7 @@ import { TaskObject } from '../../../types/task';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { IconButton } from '@material-ui/core';
 import NavBar from '../../navbar';
-
+import { Link } from 'react-router-dom';
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -45,15 +45,19 @@ const TaskList = () => {
 
     return (
         <>
-        <NavBar/>
-        <List className={classes.root}>
-            <label className="m-2">Add task</label>
-            <IconButton > <AddCircleOutlineIcon /> </IconButton>
-            {
-                tasks.map(task => (
-                    <Task task={task} />
-                ))}
-        </List>
+            <NavBar />
+            <List className={classes.root}>
+                <label className="m-2">Add task</label>
+                <Link to={"/create-task"}>
+                    <IconButton >
+                        <AddCircleOutlineIcon />
+                    </IconButton>
+                </Link>
+                {
+                    tasks.map(task => (
+                        <Task task={task} />
+                    ))}
+            </List>
         </>
     );
 }

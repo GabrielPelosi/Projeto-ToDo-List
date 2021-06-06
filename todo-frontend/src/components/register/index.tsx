@@ -31,7 +31,7 @@ const SignUp = () => {
                     <input type="password" className="form-control" placeholder="Enter password" />
                 </div>
 
-                <button type="submit" className="btn btn-primary btn-block">Sign Up</button>
+                <button type="submit" className="btn btn-primary btn-block m-1">Sign Up</button>
                 <p className="forgot-password text-right">
                     <Link className="navbar-brand" to={"/"}>Already registered sign in?</Link>
                 </p>
