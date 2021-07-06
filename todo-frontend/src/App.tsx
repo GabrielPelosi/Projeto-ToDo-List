@@ -7,7 +7,8 @@ import SignUp from './components/register';
 import ForgotPass from './components/forgottenPass';
 import TaskList from './components/profile/taskList';
 import UserDetails from './components/profile/userDetails';
-import TaskForm from './components/profile/taskForm';
+import CreateTask from './components/profile/createTask';
+import UpdateTask from './components/profile/updateTask';
 
  
 function App() {
@@ -35,7 +36,10 @@ function App() {
                 <UserDetails/>
               </Route>
               <Route path="/create-task">
-                <TaskForm/>
+                <CreateTask/>
+              </Route>
+              <Route path="/update-task">
+                <UpdateTask/>
               </Route>
             </Switch>
           </BrowserRouter>

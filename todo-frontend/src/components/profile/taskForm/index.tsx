@@ -12,8 +12,11 @@ const useStyles = makeStyles((theme: Theme) =>
     }),
 );
 
+type Props = {
+    onClickButtonForm: Function;
+}
 
-const TaskForm = () => {
+const TaskForm = ({ onClickButtonForm } : Props) => {
     const classes = useStyles();
     return (
         <>
@@ -38,8 +41,10 @@ const TaskForm = () => {
                     variant="contained"
                     color="primary"
                     className={classes.button}
-                    endIcon={<Icon>send</Icon>}>
+                    endIcon={<Icon>send</Icon>}
+                    onClick={() => onClickButtonForm()}>
                     Save
+                    
                 </Button>
             </form>
         </>
