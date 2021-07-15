@@ -5,13 +5,22 @@ import { Link } from 'react-router-dom';
 import { useState } from "react";
 import { BASE_URL } from '../../utils/requests'
 import axios from "axios";
-
+import history from '../../utils/historyConfig'
 
 type UserState = {
     firstName: string;
     lastName: string;
     email: string;
     password: string;
+}
+
+type RegisterResponse = {
+    id: string;
+    token: string;
+    email: string;
+    firstName: string;
+    lastName: string;
+    roles: string[];
 }
 const SignUp = () => {
 
@@ -26,13 +35,19 @@ const SignUp = () => {
 
     const onChange =  (event: React.ChangeEvent<HTMLInputElement>) => {
         setUserState({...userState, [event.target.name]: event.target.value });
-        console.log(userState);
     }
 
     const onSubmit =  () => {
         axios.post(`${BASE_URL}/auth/register`,userState)
         .then(resp => {
-            console.log(resp.data)
+            const dataResp = resp.data as RegisterResponse;
+            localStorage.setItem('jwt-token',`Bearer ${dataResp.token}`)
+            history.push('/tasks')
+            history.go(0)
+        }).catch(err => {
+            if(err.code === '400'){
+                console.log(err)
+            } 
         });
     }
 

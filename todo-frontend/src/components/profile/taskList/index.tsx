@@ -2,11 +2,18 @@ import React from 'react';
 import { createStyles, Theme, makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
 import Task from './task';
-import { TaskObject } from '../../../types/task';
+import {  TaskPage } from '../../../types/task';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { IconButton } from '@material-ui/core';
 import NavBar from '../../navbar';
 import { Link } from 'react-router-dom';
+import {useState, useEffect} from 'react';
+import { BASE_URL } from '../../../utils/requests'
+import axios from 'axios'
+import Pagination from '../../pagination/index'
+import {setupInterceptorsTo} from '../../../utils/axiosConfig'
+
+setupInterceptorsTo(axios)
 
 const useStyles = makeStyles((theme: Theme) =>
     createStyles({
@@ -20,27 +27,31 @@ const useStyles = makeStyles((theme: Theme) =>
 
 const TaskList = () => {
 
+    const [activePAge, setActivePage] = useState(0);
 
-    const tasks: TaskObject[] = [
-        {
-            id: 1,
-            title: "Lavar Louça",
-            description: "10/06/2021"
+    const changePage = (index: number) => {
+        setActivePage(index);
+    }
 
-        },
-        {
-            id: 2,
-            title: "Limpar o quintal",
-            description: "11/06/2021"
+    const [page, setPage] = useState<TaskPage>({
+        first: true,
+        last: true,
+        number: 0,
+        totalElements: 0,
+        totalPages: 0,
+    });
 
-        },
-        {
-            id: 3,
-            title: "Passear com o cachorro",
-            description: "14/08/2021"
+    useEffect(() => {
+        axios.get(`${BASE_URL}/tasks?page=${activePAge}&size=3`
+        )
+            .then(resp => {
+                setPage(resp.data)
+            }).catch(err => {
+                console.log(err)
+            });
+    }, [activePAge]);
 
-        }
-    ]
+   
     const classes = useStyles();
 
     return (
@@ -54,10 +65,11 @@ const TaskList = () => {
                     </IconButton>
                 </Link>
                 {
-                    tasks.map(task => (
+                    page.content?.map(task => (
                         <Task task={task} />
                     ))}
             </List>
+            <Pagination page={page} onPageChange= {changePage}/>
         </>
     );
 }
