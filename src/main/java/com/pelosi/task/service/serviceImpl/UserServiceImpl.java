@@ -69,7 +69,6 @@ public class UserServiceImpl implements UserDetailsService, CustomUserService {
         sendVerificationEmail(userToBeSaved, siteURL);
         return RegisterResponse.builder()
                 .id(savedUser.getId())
-                .token(jwtUtil.generateToken(savedUser.getEmail()))
                 .email(savedUser.getEmail())
                 .firstName(savedUser.getFirstName())
                 .lastName(savedUser.getLastName())
