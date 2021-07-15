@@ -81,15 +81,6 @@ public class UserController {
 
 
 
-    @GetMapping("/verify/{code}")
-    public String verifyUser(@PathVariable String code) {
-        if (userService.verify(code)) {
-            return "verify_success";
-        } else {
-            return "verify_fail";
-        }
-    }
-
 
 
 }

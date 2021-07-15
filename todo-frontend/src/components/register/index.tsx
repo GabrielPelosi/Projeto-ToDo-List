@@ -6,6 +6,8 @@ import { useState } from "react";
 import { BASE_URL } from '../../utils/requests'
 import axios from "axios";
 import history from '../../utils/historyConfig'
+import { makeStyles } from '@material-ui/core/styles';
+import Alert from '@material-ui/lab/Alert';
 
 type UserState = {
     firstName: string;
@@ -24,7 +26,19 @@ type RegisterResponse = {
 }
 const SignUp = () => {
 
+    const [successState, setSuccessState] = useState<Boolean>(false);
 
+    const [errorState, setErrorState] = useState<Boolean>(false);
+
+
+    const [regsiterResponseState, setRegsiterResponseState] = useState<RegisterResponse>({
+        id: "",
+        token: "",
+        email: "",
+        firstName: "",
+        lastName: "",
+        roles: []
+    })
 
     const [userState, setUserState] = useState<UserState>({
         firstName: "",
@@ -33,27 +47,37 @@ const SignUp = () => {
         password: ""
     });
 
-    const onChange =  (event: React.ChangeEvent<HTMLInputElement>) => {
-        setUserState({...userState, [event.target.name]: event.target.value });
+    const onChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setUserState({ ...userState, [event.target.name]: event.target.value });
     }
 
-    const onSubmit =  () => {
-        axios.post(`${BASE_URL}/auth/register`,userState)
-        .then(resp => {
-            const dataResp = resp.data as RegisterResponse;
-            localStorage.setItem('jwt-token',`Bearer ${dataResp.token}`)
-            history.push('/tasks')
-            history.go(0)
-        }).catch(err => {
-            if(err.code === '400'){
-                console.log(err)
-            } 
-        });
+    const onSubmit = (event: any) => {
+        event.preventDefault();
+        axios.post(`${BASE_URL}/auth/register`, userState)
+            .then(resp => {
+                if (resp.status === 200) {
+                
+                    const dataResp = resp.data as RegisterResponse;
+                    setSuccessState(true);
+                    
+                }
+
+            }).catch(error => {
+                setErrorState(true)
+            });
     }
 
 
     return (
         <>
+            {
+                successState ?
+                <Alert severity="success">Verifique sua conta através do email e faça o login!!</Alert> :<div></div>
+                
+            }
+
+            {errorState ? <Alert severity="error">Email já registrado</Alert>:<div></div>}
+
             <NavBar />
             <form onSubmit={onSubmit}>
                 <h3>Sign Up</h3>
