@@ -3,7 +3,19 @@ jwt:
   expirationDateInMs: 10 000
   refreshExpirationDateInMs: 86400000
 
+
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: pelosi.todo.app@gmail.com
+    password: todoapp@pelosi
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
   profiles:
     active: ${APP_PROFILE:dev}
   jpa:
