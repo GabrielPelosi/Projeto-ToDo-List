@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping(value = "tasks")
+@RequestMapping(value = "/tasks")
 public class TaskController {
 
     private final @NonNull TaskService taskService;
