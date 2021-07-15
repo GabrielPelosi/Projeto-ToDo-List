@@ -40,6 +40,7 @@ public class WebSpringSecurityConfig extends WebSecurityConfigurerAdapter {
                 .antMatchers("/auth/login").permitAll()
                 .antMatchers("/auth/register").permitAll()
                 .antMatchers(HttpMethod.GET,"/auth/refresh-token").permitAll()
+                .antMatchers("/auth/verify/**").permitAll()
                 .antMatchers("/test").permitAll()
                 .anyRequest().authenticated()
                 .and().exceptionHandling().and().sessionManagement()

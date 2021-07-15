@@ -11,12 +11,15 @@ import com.pelosi.task.service.serviceImpl.UserServiceImpl;
 import io.jsonwebtoken.impl.DefaultClaims;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
 
+import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -33,8 +36,14 @@ public class UserController {
 
 
     @PostMapping(value = "/register")
-    public ResponseEntity<RegisterResponse> registerNewUser(@RequestBody RegisterRequest registerRequest){
-        return ResponseEntity.ok(userService.createUser(registerRequest));
+    public ResponseEntity<RegisterResponse> registerNewUser(@RequestBody RegisterRequest registerRequest,
+                                                            HttpServletRequest request)
+            throws UnsupportedEncodingException, MessagingException {
+
+        String siteURL = request.getRequestURL().toString();
+        String site = siteURL.replace(request.getServletPath(), "");
+        return ResponseEntity.ok(userService.createUser(registerRequest, site));
+
     }
 
     @PostMapping(value = "/login")
@@ -68,6 +77,17 @@ public class UserController {
             expectedMap.put(entry.getKey(), entry.getValue());
         }
         return expectedMap;
+    }
+
+
+
+    @GetMapping("/verify/{code}")
+    public String verifyUser(@PathVariable String code) {
+        if (userService.verify(code)) {
+            return "verify_success";
+        } else {
+            return "verify_fail";
+        }
     }
 
 

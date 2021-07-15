@@ -30,7 +30,7 @@ const UpdateTask = () => {
     }
 
     const onSubmit =  () => {
-        /*
+        
         axios.put(`${BASE_URL}/tasks/`,taskSate)
         .then(resp => {
             const dataResp = resp.data as TaskObject;
@@ -41,7 +41,7 @@ const UpdateTask = () => {
                 console.log(err)
             } 
         });
-        */
+        
     }
 
     
@@ -49,7 +49,8 @@ const UpdateTask = () => {
         <>
             <NavBar />
             <form onSubmit={onSubmit}> 
-                <h3>Create new Task</h3>
+                <h3>Update a Task</h3>
+                <label></label>
                 <div className="form-group m-1">
                     <label>Task Title</label>
                     <input onChange={onChange} id="title" name="title" type="text" className="form-control" placeholder="Title"></input>

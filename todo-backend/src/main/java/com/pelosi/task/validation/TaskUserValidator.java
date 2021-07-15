@@ -17,7 +17,7 @@ public class TaskUserValidator {
     public void validateTaskUser(Task task){
         String currentLoggedEmail = userService.getCurrentUser().getEmail();
 
-         if(task.getCreatedBy().getEmail().equals(currentLoggedEmail))
+         if(!task.getCreatedBy().getEmail().equals(currentLoggedEmail))
              throw new UserNotAllowExecption("Usuário não autorizado!");
     }
 }
