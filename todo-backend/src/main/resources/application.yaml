@@ -1,6 +1,6 @@
 jwt:
   secret: FBIB54IBIU45B7I54B7I4B7I4B7I4B7IVGBUI
-  expirationDateInMs: 10 000
+  expirationDateInMs: 3600000
   refreshExpirationDateInMs: 86400000
 
 

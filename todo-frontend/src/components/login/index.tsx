@@ -6,6 +6,7 @@ import axios from 'axios'
 import history from '../../utils/historyConfig'
 import {BASE_URL} from '../../utils/requests'
 import  { Redirect } from 'react-router-dom'
+import Alert from '@material-ui/lab/Alert';
 
 
 
@@ -21,6 +22,9 @@ type AuthResponse = {
 const LoginPage = () => {
 
     const [successState, setSuccessState] = useState<Boolean>(false);
+
+    const [errorState, setErrorState] = useState<Boolean>(false);
+
 
     const [userState, setUserState] = useState<AuthRequest>({
         email: "",
@@ -42,23 +46,18 @@ const LoginPage = () => {
                 setSuccessState(true)
             }
         }).catch(err => {
-            if(err.code === '400'){
-                console.log(400)
-            }
+            setErrorState(true)
         });
-    }
-
-
-    if(successState){
-        return(
-             <Redirect to = {{ pathname: "/tasks" }} />
-        )
-    }else {
-        <Redirect to = {{ pathname: "/jghjg" }} />
     }
 
     return (
         <>
+        {
+            successState ?  <Redirect to = {{ pathname: "/tasks" }} /> : <div></div>
+        }
+        {
+            errorState ?  <Alert severity="error">Credenciais inválidas!!</Alert> : <div></div>
+        }
             <NavBar />
             <form onSubmit={onSubmit}>
                 <h3>Login</h3>

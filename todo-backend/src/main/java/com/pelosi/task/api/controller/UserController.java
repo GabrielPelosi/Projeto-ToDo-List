@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.HashMap;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class UserController {
     @PostMapping(value = "/register")
     public ResponseEntity<RegisterResponse> registerNewUser(@RequestBody RegisterRequest registerRequest,
                                                             HttpServletRequest request)
-            throws UnsupportedEncodingException, MessagingException {
+            throws IOException, MessagingException {
 
         String siteURL = request.getRequestURL().toString();
         String site = siteURL.replace(request.getServletPath(), "");
