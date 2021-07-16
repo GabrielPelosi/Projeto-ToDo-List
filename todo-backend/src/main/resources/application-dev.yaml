@@ -1,7 +1,4 @@
-#spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
-#spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
-#spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql
-#spring.jpa.properties.hibernate.hbm2ddl.delimiter=;
+
 #spring.jpa.hibernate.ddl-auto=none
 
 spring:
@@ -13,4 +10,11 @@ spring:
     hibernate:
       ddl-auto: update
       generate-ddl: true
-
+    properties:
+      javax:
+        persistence:
+          schema-generation:
+            create-source: metadata
+            scripts:
+              action: create
+              create-target: create.sql

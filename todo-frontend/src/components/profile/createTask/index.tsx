@@ -65,7 +65,7 @@ const CreateTask = () => {
 
                 <div className="form-group m-1">
                     <label>Task Description</label>
-                    <input onChange={onChange} required id="description" name="description" type="text" className="form-control" placeholder="Title"pattern="[A-Za-z0-9]{1,150}"></input>
+                    <input  onChange={onChange} required id="description" name="description" type="text" className="form-control" placeholder="Title"pattern="[A-Za-z0-9]{1,150}"></input>
                 </div>
 
                 <Button
