@@ -37,7 +37,6 @@ const Task = ({ task }: Props) => {
             <ListItem>
                 <ListItemText primary={task.title} secondary={task.description} />
                 <IconButton onClick={onClicDeletekButton} aria-label="delete"> <DeleteIcon/> </IconButton>
-                <IconButton > <Edit/> </IconButton>
             </ListItem>
         </>
     )

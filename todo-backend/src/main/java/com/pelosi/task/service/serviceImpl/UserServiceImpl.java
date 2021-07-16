@@ -36,7 +36,6 @@ import com.google.common.io.Files;
 public class UserServiceImpl implements UserDetailsService, CustomUserService {
 
     private final @NonNull UserRepository userRepository;
-    private final @NonNull JwtUtil jwtUtil;
     private final @NonNull JavaMailSender mailSender;
 
     @Override
