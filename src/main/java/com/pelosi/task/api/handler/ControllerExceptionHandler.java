@@ -12,6 +12,8 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.validation.ConstraintViolationException;
+
 @ControllerAdvice
 public class ControllerExceptionHandler {
 
@@ -42,4 +44,11 @@ public class ControllerExceptionHandler {
     public ResponseEntity<?> handleDataIntegrityViolationException(DataIntegrityViolationException ex){
         return ResponseEntity.badRequest().body("Email já utilizado!");
     }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ResponseEntity<?> handleConstraintViolationException(ConstraintViolationException ex){
+        return ResponseEntity.badRequest().body("Campos devem estar preenchidos!!");
+    }
+
+
 }
