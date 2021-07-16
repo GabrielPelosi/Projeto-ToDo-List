@@ -1,5 +1,6 @@
 package com.pelosi.task.service.serviceImpl;
 
+import com.google.common.base.Charsets;
 import com.pelosi.task.config.security.JwtUtil;
 import com.pelosi.task.domain.Role;
 import com.pelosi.task.domain.User;
@@ -11,6 +12,8 @@ import com.pelosi.task.service.CustomUserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -22,10 +25,11 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.io.UnsupportedEncodingException;
+import java.io.*;
 import java.util.List;
 import java.util.Optional;
 
+import com.google.common.io.Files;
 
 @Service
 @RequiredArgsConstructor
@@ -48,7 +52,7 @@ public class UserServiceImpl implements UserDetailsService, CustomUserService {
 
 
     public RegisterResponse createUser(RegisterRequest registerRequest, String siteURL)
-            throws UnsupportedEncodingException, MessagingException {
+            throws IOException, MessagingException {
         if (registerRequest.getPassword().isEmpty() ||
         registerRequest.getPassword().isBlank()){
             throw new IllegalArgumentException("Senha não pode estar vazia!");
@@ -82,16 +86,17 @@ public class UserServiceImpl implements UserDetailsService, CustomUserService {
     }
 
     private void sendVerificationEmail(User user, String siteURL)
-            throws MessagingException, UnsupportedEncodingException {
+            throws MessagingException, IOException {
         String toAddress = user.getEmail();
         String fromAddress = user.getEmail();
         String senderName = "pelosi.todo.app@gmail.com";
-        String subject = "Please verify your registration";
-        String content = "Dear [[name]],<br>"
-                + "Please click the link below to verify your registration:<br>"
-                + "<h3><a href=\"[[URL]]\" target=\"_self\">VERIFY</a></h3>"
-                + "Thank you,<br>"
-                + "Your company name.";
+        String subject = "Ativar conta To-do list";
+
+        Resource resource = new ClassPathResource("templates/emailContent.html");
+
+        File file = resource.getFile();
+
+        String content = Files.toString(file, Charsets.UTF_8);
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
