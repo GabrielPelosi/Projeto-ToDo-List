@@ -3,8 +3,7 @@ jwt:
   expirationDateInMs: 3600000
   refreshExpirationDateInMs: 86400000
 
-server:
-  port: ${PORT:8080}
+
 
 spring:
   mail:
