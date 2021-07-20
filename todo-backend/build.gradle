@@ -42,11 +42,14 @@ test {
 	useJUnitPlatform()
 }
 
-jar {
+task fatJar(type: Jar) {
 	manifest {
 		attributes(
 				'Main-Class': 'com.pelosi.task.TaskApplication')}
+	archiveClassifier = "all"
 	from {
+		configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
 		configurations.runtimeClasspath.collect { it.isDirectory() ? it : zipTree(it) }
 	}
+	with jar
 }
