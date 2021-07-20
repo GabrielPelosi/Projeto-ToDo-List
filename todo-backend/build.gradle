@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.5.2'
 	id 'io.spring.dependency-management' version '1.0.11.RELEASE'
 	id 'java'
+	id 'java-library'
 }
 
 group = 'com.pelosi'
@@ -44,7 +45,6 @@ test {
 jar {
 	manifest {
 		attributes(
-				'Class-Path': configurations.compile.collect { it.getName() }.join(' '),
 				'Main-Class': 'com.pelosi.task.TaskApplication'
 		)
 	}
