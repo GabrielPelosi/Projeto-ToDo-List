@@ -40,3 +40,12 @@ dependencies {
 test {
 	useJUnitPlatform()
 }
+
+jar {
+	manifest {
+		attributes(
+
+				'TaskApplication': 'com.pelosi.task'
+		)
+	}
+}
