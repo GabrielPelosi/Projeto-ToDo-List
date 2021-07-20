@@ -44,7 +44,6 @@ test {
 jar {
 	manifest {
 		attributes(
-
 				'TaskApplication': 'com.pelosi.task.TaskApplication'
 		)
 	}
