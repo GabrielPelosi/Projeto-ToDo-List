@@ -1,6 +1,7 @@
 package com.pelosi.task.service.serviceImpl;
 
 import com.google.common.base.Charsets;
+import com.google.common.io.CharStreams;
 import com.pelosi.task.config.security.JwtUtil;
 import com.pelosi.task.domain.Role;
 import com.pelosi.task.domain.User;
@@ -12,6 +13,7 @@ import com.pelosi.task.service.CustomUserService;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import net.bytebuddy.utility.RandomString;
+import org.apache.tomcat.util.http.fileupload.IOUtils;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
 import org.springframework.mail.javamail.JavaMailSender;
@@ -91,11 +93,15 @@ public class UserServiceImpl implements UserDetailsService, CustomUserService {
         String senderName = "pelosi.todo.app@gmail.com";
         String subject = "Ativar conta To-do list";
 
-        Resource resource = new ClassPathResource("templates/emailContent.html");
+        ClassPathResource resource = new ClassPathResource("templates/emailContent.html");
+        String content = "";
+        if(resource.exists()){
+            InputStream ip = resource.getInputStream();
+            content = CharStreams.toString(new InputStreamReader(ip,Charsets.UTF_8));
+        }else{
+            throw new FileNotFoundException("Ficheiro não encontrado");
+        }
 
-        File file = resource.getFile();
-
-        String content = Files.toString(file, Charsets.UTF_8);
 
         MimeMessage message = mailSender.createMimeMessage();
         MimeMessageHelper helper = new MimeMessageHelper(message);
