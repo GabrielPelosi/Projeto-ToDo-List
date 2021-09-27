@@ -30,3 +30,5 @@
 ## Project Link
 
 * [Here](https://pelosi-todo-task-app.netlify.app/)
+
+![Image](https://raw.githubusercontent.com/GabrielPelosi/Projeto-ToDo-List/main/todo-tasks_react.jpg)
